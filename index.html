@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Get a quote — Weald Glass</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/quote.css" />
+</head>
+<body>
+  <a class="skip-link" href="#quote-main">Skip to quote form</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <div class="brand">
+        <span class="brand__mark" aria-hidden="true"></span>
+        <div>
+          <p class="brand__eyebrow">Established since 1983</p>
+          <p class="brand__name">Weald Glass</p>
+        </div>
+      </div>
+      <p class="tagline">Greenhouse glass cut to size — simple, specialist supply.</p>
+    </div>
+  </header>
+
+  <main id="quote-main" class="main">
+    <div class="wrap main__grid">
+      <section class="intro" aria-labelledby="intro-heading">
+        <h1 id="intro-heading">Request a quote</h1>
+        <p class="lead">
+          Add one or more glass panels below. Choose a standard size or enter custom dimensions (mm).
+          Pricing updates automatically; final totals are indicative until confirmed by our team.
+        </p>
+        <ul class="bullets">
+          <li>3&nbsp;mm float, 3&nbsp;mm toughened, 4&nbsp;mm toughened</li>
+          <li>Standard sizes or custom width × height</li>
+          <li>Optional file upload for shaped glass</li>
+        </ul>
+      </section>
+
+      <form id="quote-form" class="quote-form" novalidate>
+        <fieldset class="items-fieldset">
+          <legend class="items-fieldset__legend">Glass items</legend>
+          <div id="line-items" class="line-items" role="list"></div>
+          <button type="button" class="btn btn--secondary btn--add" id="add-line">
+            <span class="btn__icon" aria-hidden="true">+</span>
+            Add another panel
+          </button>
+        </fieldset>
+
+        <section class="panel contact-panel">
+          <h2 class="panel__title">Your details</h2>
+          <div class="field-grid">
+            <label class="field">
+              <span class="field__label">Full name <abbr title="required">*</abbr></span>
+              <input type="text" name="customerName" id="customerName" required autocomplete="name" />
+            </label>
+            <label class="field">
+              <span class="field__label">Email <abbr title="required">*</abbr></span>
+              <input type="email" name="customerEmail" id="customerEmail" required autocomplete="email" />
+            </label>
+            <label class="field field--full">
+              <span class="field__label">Phone <abbr title="required">*</abbr></span>
+              <input type="tel" name="customerPhone" id="customerPhone" required autocomplete="tel" />
+            </label>
+          </div>
+        </section>
+
+        <aside class="totals-card" aria-live="polite" aria-atomic="true">
+          <h2 class="totals-card__title">Enquiry total</h2>
+          <dl class="totals-list">
+            <div class="totals-row">
+              <dt>Subtotal (excl. VAT)</dt>
+              <dd id="total-sub">£0.00</dd>
+            </div>
+            <div class="totals-row totals-row--muted">
+              <dt>VAT (20%)</dt>
+              <dd id="total-vat">£0.00</dd>
+            </div>
+            <div class="totals-row totals-row--strong">
+              <dt>Total (incl. VAT)</dt>
+              <dd id="total-inc">£0.00</dd>
+            </div>
+          </dl>
+          <p class="totals-note">
+            Indicative pricing. Rules use m² rates, minimums per panel, and size-based adjustments — replace values in <code>js/pricing.js</code> with your live sheet.
+          </p>
+          <button type="submit" class="btn btn--primary" id="submit-btn">
+            Submit enquiry
+          </button>
+        </aside>
+      </form>
+    </div>
+  </main>
+
+  <div id="toast-region" class="toast-region" aria-live="polite"></div>
+
+  <template id="line-item-template">
+    <article class="line-card" role="listitem" data-line-id="">
+      <div class="line-card__head">
+        <h3 class="line-card__title">Panel <span class="line-card__index"></span></h3>
+        <button type="button" class="btn btn--ghost btn--remove" title="Remove this panel" aria-label="Remove this panel">Remove</button>
+      </div>
+
+      <label class="field">
+        <span class="field__label">Glass type <abbr title="required">*</abbr></span>
+        <select class="input-glass-type" required>
+          <option value="">Select…</option>
+          <option value="float3">3&nbsp;mm float (horticultural)</option>
+          <option value="tough3">3&nbsp;mm toughened</option>
+          <option value="tough4">4&nbsp;mm toughened</option>
+        </select>
+      </label>
+
+      <fieldset class="size-mode">
+        <legend class="size-mode__legend">Size</legend>
+        <div class="segmented">
+          <label class="segmented__opt">
+            <input type="radio" name="" value="standard" class="input-size-mode" checked />
+            <span>Standard size</span>
+          </label>
+          <label class="segmented__opt">
+            <input type="radio" name="" value="custom" class="input-size-mode" />
+            <span>Custom size</span>
+          </label>
+        </div>
+
+        <div class="size-block size-block--standard">
+          <label class="field">
+            <span class="field__label">Preset pane <abbr title="required">*</abbr></span>
+            <select class="input-standard-preset"></select>
+          </label>
+        </div>
+
+        <div class="size-block size-block--custom is-hidden">
+          <div class="field-grid field-grid--dims">
+            <label class="field">
+              <span class="field__label">Width (mm) <abbr title="required">*</abbr></span>
+              <input type="number" class="input-width" min="50" max="2500" step="1" inputmode="numeric" />
+            </label>
+            <label class="field">
+              <span class="field__label">Height (mm) <abbr title="required">*</abbr></span>
+              <input type="number" class="input-height" min="50" max="2500" step="1" inputmode="numeric" />
+            </label>
+          </div>
+        </div>
+      </fieldset>
+
+      <div class="field-grid field-grid--qty">
+        <label class="field">
+          <span class="field__label">Quantity <abbr title="required">*</abbr></span>
+          <input type="number" class="input-qty" min="1" max="999" step="1" value="1" required inputmode="numeric" />
+        </label>
+        <label class="field field--file">
+          <span class="field__label">Shaped glass — template (optional)</span>
+          <input type="file" class="input-shape-file" accept=".pdf,.png,.jpg,.jpeg,.dwg,.dxf" />
+          <span class="field__hint">PDF, image, or CAD outline if non-rectangular.</span>
+        </label>
+      </div>
+
+      <div class="line-card__pricing">
+        <p class="line-price">
+          <span class="line-price__label">Line total</span>
+          <span class="line-price__value">£0.00</span>
+        </p>
+        <p class="line-breakdown" aria-live="polite"></p>
+      </div>
+    </article>
+  </template>
+
+  <script src="js/pricing.js"></script>
+  <script src="js/xero-demo.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
